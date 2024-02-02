@@ -15,4 +15,4 @@ Footre ✅ <br />
 Fitur OPTIONAL : <br />
 Search user ✅ <br />
 Indexing Database ✅ <br />
-Upload Foto ✅ -> Nama file bisa di buat unik secara otomatis tetapi kami memilih untuk sesuai kemauan Admin. 
+Upload Foto ✅  
