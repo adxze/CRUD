@@ -99,26 +99,24 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $row = $result->fetch_assoc();
             $oldImagePath = $row['images'];
 
-            if(isset($_FILES["images"]) && is_uploaded_file($_FILES["images"]["tmp_name"])){
-                $filename = $_FILES["images"]["name"];
+            if(isset($_FILES["images"]) && $_FILES["images"]["error"] == 0){
+                $fileExtension = pathinfo($_FILES["images"]["name"], PATHINFO_EXTENSION);
+                $filename = uniqid('', true) . '.' . $fileExtension;
                 $filetype = $_FILES["images"]["type"];
                 $filesize = $_FILES["images"]["size"];
 
-                // Verify file extension
-                $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                if(!in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                if(!in_array($fileExtension, $allowedExtensions)) {
                     $errorMessage = "Please select a valid file format.";
                     break;
                 }
 
-                // Verify file size - 5MB maximum
                 $maxsize = 5 * 1024 * 1024;
                 if($filesize > $maxsize) {
                     $errorMessage = "File size is larger than the allowed limit.";
                     break;
                 }
 
-                // Check whether file exists before uploading it
                 $destinationDirectory = "../photofile";
 
                 if(file_exists($destinationDirectory . '/' . $filename)){
@@ -130,15 +128,13 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                         unlink($oldImagePath);
                     }
 
-                    // Upload the new image file
                     move_uploaded_file($_FILES["images"]["tmp_name"], $destinationDirectory . '/' . $filename);
-                    $images = "/yes/photofile/". $filename; // Store the file path in the $images variable
+                    $images = "/yes/photofile/". $filename; 
                 }
-            } 
-            else{
-                // No file uploaded or error in upload, set $images to empty string
+            } else{
                 $images = $oldImagePath;
             }
+
 
     
 

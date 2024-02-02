@@ -104,32 +104,29 @@ if ($connection->connect_error) {
 
 
             if(isset($_FILES["images"]) && $_FILES["images"]["error"] == 0){
-                $filename = $_FILES["images"]["name"];
+                $fileExtension = pathinfo($_FILES["images"]["name"], PATHINFO_EXTENSION);
+                $filename = uniqid('', true) . '.' . $fileExtension;
                 $filetype = $_FILES["images"]["type"];
                 $filesize = $_FILES["images"]["size"];
-    
-
-                $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                if(!in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+            
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                if(!in_array($fileExtension, $allowedExtensions)) {
                     $errorMessage = "Please select a valid file format.";
                     break;
                 }
-    
-
+            
                 $maxsize = 5 * 1024 * 1024;
                 if($filesize > $maxsize) {
                     $errorMessage = "File size is larger than the allowed limit.";
                     break;
                 }
-    
-
+            
                 $destinationDirectory = "../photofile";
-    
+            
                 if(file_exists($destinationDirectory . '/' . $filename)){
                     $errorMessage = $filename . " already exists.";
                     break;
-                } 
-                else{
+                } else{
                     move_uploaded_file($_FILES["images"]["tmp_name"], $destinationDirectory . '/' . $filename);
                     $images = "/yes/photofile/". $filename; 
                 }
