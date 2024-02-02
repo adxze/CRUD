@@ -1,6 +1,8 @@
 Anggota : Adi , Grace, Rafly 
 
 
+❗️❗️ buka melalui login.php terlebih dahulu jika index.php tidak bisa ❗️❗️ 
+
 Menggunakan : HMTL, CSS, PHP, SQL, JS, BOOTSTRAP.
 
 Fitur  WAJIB : <br />
