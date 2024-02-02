@@ -1,5 +1,12 @@
 <?php
     require 'function.php';
+
+    session_start();
+
+    if(!isset($_SESSION["login"]) || $_SESSION["login"] !=true ){
+        header("location: login.php");
+    }
+      
 ?>
 
 <!DOCTYPE html>
@@ -152,15 +159,13 @@
                                                     $prevData = $data;
                                                 };
                                             ?>
-
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                         <footer>
-                            <strong>Made by team</strong> : @adzeiii, @raflyadha21, @gracebirgitta
+                            <strong>Made by :</strong> @adzeiii, @raflyadha21, @gracebirgitta
                         </footer>
                     </div>
                 </main>
@@ -203,4 +208,5 @@
       </div>
     </div>
   </div>
+
 </html>
